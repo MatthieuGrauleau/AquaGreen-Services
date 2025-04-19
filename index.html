@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaGreen Services - Entretien de jardins et piscines</title>
+    <style>
+        :root {
+            --primary-color: #0d6832;
+            --secondary-color: #1a96d4;
+            --light-bg: #f5f5f5;
+            --dark-text: #333;
+            --light-text: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 60px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .hero {
+            height: 80vh;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/api/placeholder/1200/800');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            color: var(--light-text);
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+        
+        .services {
+            background-color: white;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .service-content {
+            padding: 20px;
+        }
+        
+        .service-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Before After Slider */
+        .before-after-section {
+            background-color: var(--light-bg);
+        }
+        
+        .before-after-slider {
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .before-after-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        
+        .before-image,
+        .after-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .before-image {
+            z-index: 1;
+            width: 50%;
+        }
+        
+        .after-image {
+            z-index: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 100%;
+            width: 4px;
+            background-color: white;
+            z-index: 2;
+            cursor: ew-resize;
+        }
+        
+        .slider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .slider::after {
+            content: '⇄';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .before-after-label {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .before-label,
+        .after-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .gallery {
+            background-color: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .testimonials {
+            background-color: var(--light-bg);
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial .client {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .contact {
+            background-color: white;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            padding: 50px 0;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: var(--light-text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .before-after-container {
+                height: 300px;
+            }
+            
+            .gallery-item {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo AquaGreen Services" style="border-radius: 5px;">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#before-after">Avant/Après</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#testimonials">Témoignages</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AquaGreen Services</h1>
+            <p>Votre spécialiste de l'entretien extérieur pour particuliers et entreprises</p>
+            <a href="#contact" class="btn">Demander un devis gratuit</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('/api/placeholder/400/200');"></div>
+                    <div class="service-content">
+                        <h3>Tonte de Pelouse</h3>
+                        <p>Service professionnel de tonte de pelouse pour maintenir votre gazon en parfait état tout au long de l'année.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('/api/placeholder/400/200');"></div>
+                    <div class="service-content">
+                        <h3>Nettoyage de Piscines</h3>
+                        <p>Entretien complet de votre piscine : nettoyage, équilibrage de l'eau et maintenance des équipements.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('/api/placeholder/400/200');"></div>
+                    <div class="service-content">
+                        <h3>Nettoyage de Terrasses</h3>
+                        <p>Nettoyage haute pression de vos terrasses pour retrouver l'éclat du premier jour.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('/api/placeholder/400/200');"></div>
+                    <div class="service-content">
+                        <h3>Nettoyage de Gouttières</h3>
+                        <p>Désobstruction et nettoyage complet de vos gouttières pour éviter tout problème d'écoulement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="before-after" class="before-after-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Avant / Après</h2>
+            </div>
+            
+            <div class="before-after-slider">
+                <h3 style="text-align: center; margin-bottom: 20px;">Tonte de Pelouse</h3>
+                <div class="before-after-container">
+                    <div class="before-image" style="background-image: url('pelouse_avant.png');"></div>
+                    <div class="after-image" style="background-image: url('pelouse_apres.png');"></div>
+                    <div class="slider" id="slider1"></div>
+                </div>
+                <div class="before-after-label">
+                    <span class="before-label">Avant</span>
+                    <span class="after-label">Après</span>
+                </div>
+            </div>
+            
+            <div class="before-after-slider">
+                <h3 style="text-align: center; margin-bottom: 20px;">Nettoyage de Piscine</h3>
+                <div class="before-after-container">
+                    <div class="before-image" style="background-image: url('https://images.unsplash.com/photo-1617484148398-0130c1790b22?q=80&w=800');"></div>
+                    <div class="after-image" style="background-image: url('https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?q=80&w=800');"></div>
+                    <div class="slider" id="slider2"></div>
+                </div>
+                <div class="before-after-label">
+                    <span class="before-label">Avant</span>
+                    <span class="after-label">Après</span>
+                </div>
+            </div>
+            
+            <div class="before-after-slider">
+                <h3 style="text-align: center; margin-bottom: 20px;">Nettoyage de Terrasse</h3>
+                <div class="before-after-container">
+                    <div class="before-image" style="background-image: url('https://images.unsplash.com/photo-1667494538907-eb847d24f99c?q=80&w=800');"></div>
+                    <div class="after-image" style="background-image: url('https://images.unsplash.com/photo-1591122947157-26bb01d58ff2?q=80&w=800');"></div>
+                    <div class="slider" id="slider3"></div>
+                </div>
+                <div class="before-after-label">
+                    <span class="before-label">Avant</span>
+                    <span class="after-label">Après</span>
+                </div>
+            </div>
+            
+            <div class="before-after-slider">
+                <h3 style="text-align: center; margin-bottom: 20px;">Nettoyage de Gouttières</h3>
+                <div class="before-after-container">
+                    <div class="before-image" style="background-image: url('https://images.unsplash.com/photo-1629423317731-73fef2361ba0?q=80&w=800');"></div>
+                    <div class="after-image" style="background-image: url('https://images.unsplash.com/photo-1635107465785-97b32f06fdd1?q=80&w=800');"></div>
+                    <div class="slider" id="slider4"></div>
+                </div>
+                <div class="before-after-label">
+                    <span class="before-label">Avant</span>
+                    <span class="after-label">Après</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Notre Galerie</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1558895918-87dc614bad93?q=80&w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1622397808680-09e482ea68fb?q=80&w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1529290130-4ca3753253ae?q=80&w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1591474200742-8e512e6f98f8?q=80&w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1594113294444-85198ca35c98?q=80&w=400');"></div>
+                <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1598228723793-52759bba239c?q=80&w=400');"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Témoignages Clients</h2>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"AquaGreen a complètement transformé mon jardin. Le service de tonte est impeccable et très professionnel. Je les recommande vivement !"</p>
+                    <div class="client">- Marie D., Lyon</div>
+                </div>
+                <div class="testimonial">
+                    <p>"Nous avons fait appel à AquaGreen pour le nettoyage de notre piscine et le résultat est bluffant. L'eau est cristalline et l'équipe est très réactive."</p>
+                    <div class="client">- Thomas L., Marseille</div>
+                </div>
+                <div class="testimonial">
+                    <p>"Service de nettoyage de terrasse incroyable. Ma terrasse paraît neuve ! Personnel courtois et travail soigné. Merci AquaGreen !"</p>
+                    <div class="client">- Sophie M., Bordeaux</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contactez-Nous</h2>
+            </div>
+            <div class="contact-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nom</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service souhaité</label>
+                        <select id="service" class="form-control" required>
+                            <option value="">Choisissez un service</option>
+                            <option value="tonte">Tonte de pelouse</option>
+                            <option value="piscine">Nettoyage de piscine</option>
+                            <option value="terrasse">Nettoyage de terrasse</option>
+                            <option value="gouttiere">Nettoyage de gouttières</option>
+                            <option value="autre">Autre (précisez dans le message)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AquaGreen Services</h3>
+                    <p>Spécialiste de l'entretien extérieur pour particuliers et entreprises.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens Rapides</h3>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#before-after">Avant/Après</a></li>
+                        <li><a href="#gallery">Galerie</a></li>
+                        <li><a href="#testimonials">Témoignages</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>📞 06 XX XX XX XX</li>
+                        <li>✉️ contact@aquagreen-services.fr</li>
+                        <li>🏠 Votre région, France</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-links">
+                        <a href="#">FB</a>
+                        <a href="#">IG</a>
+                        <a href="#">TW</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 AquaGreen Services. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Before-After Slider Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliders = document.querySelectorAll('#slider1, #slider2, #slider3, #slider4');
+            
+            sliders.forEach(function(slider) {
+                const container = slider.parentElement;
+                const beforeImage = container.querySelector('.before-image');
+                
+                // Initial position
+                slider.style.left = '50%';
+                beforeImage.style.width = '50%';
+                
+                // Mouse events
+                let isActive = false;
+                
+                slider.addEventListener('mousedown', function() {
+                    isActive = true;
+                });
+                
+                window.addEventListener('mouseup', function() {
+                    isActive = false;
+                });
+                
+                window.addEventListener('mousemove', function(e) {
+                    if (!isActive) return;
+                    
+                    const rect = container.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const containerWidth = container.offsetWidth;
+                    
+                    if (x < 0) return;
+                    if (x > containerWidth) return;
+                    
+                    slider.style.left = x + 'px';
+                    beforeImage.style.width = x + 'px';
+                });
+                
+                // Touch events for mobile
+                slider.addEventListener('touchstart', function() {
+                    isActive = true;
+                });
+                
+                window.addEventListener('touchend', function() {
+                    isActive = false;
+                });
+                
+                window.addEventListener('touchmove', function(e) {
+                    if (!isActive) return;
+                    
+                    const rect = container.getBoundingClientRect();
+                    const x = e.touches[0].clientX - rect.left;
+                    const containerWidth = container.offsetWidth;
+                    
+                    if (x < 0) return;
+                    if (x > containerWidth) return;
+                    
+                    slider.style.left = x + 'px';
+                    beforeImage.style.width = x + 'px';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
